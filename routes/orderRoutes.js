@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { handleCreateOrder, handleAllLoggedInOrders, handleAdminAllOrders, handleUpdateOrder } = require("../controllers/orderController")
+const { handleCreateOrder, handleAllLoggedInOrders, handleAdminAllOrders, handleUpdateOrder, handleDeleteOrder } = require("../controllers/orderController")
 const {isLoggedIn,customRoles} = require('../middlewares/user')
 
 
@@ -11,6 +11,6 @@ router.route("/myorders").get(isLoggedIn,handleAllLoggedInOrders)
 
 //Admin routes
 router.route("/admin/allorders").get(isLoggedIn,customRoles('admin'),handleAdminAllOrders)
-router.route("/admin/updateorder/:id").get(isLoggedIn,customRoles('admin'),handleUpdateOrder)
-
+router.route("/admin/updateorder/:id").put(isLoggedIn,customRoles('admin'),handleUpdateOrder)
+router.route("/admin/deleteorder/:id").delete(isLoggedIn,customRoles('admin'),handleDeleteOrder)
 module.exports = router;
