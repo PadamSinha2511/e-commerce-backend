@@ -267,9 +267,6 @@ async function handleManagerAllUser(req,res)
 
 
 
-
-
-
 module.exports={
     handleSignup,
     handleLogin,

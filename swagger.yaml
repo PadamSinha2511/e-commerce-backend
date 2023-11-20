@@ -1,0 +1,349 @@
+openapi: 3.0.0
+info:
+  title: E-commerce Backend 
+  version: 1.0.0
+  description: This documentation can be used to test out all the apis
+
+tags:
+  - name: Home
+    description: Test Home route
+  - name: User
+    description: Operations related to user management
+  - name: Product
+    description: Operation related to product management
+paths:
+  /api/v1:
+    get:
+      tags:
+        - Home
+      description: Returns a json msg
+      responses:
+        '200':
+          description: Successful response
+        '500':
+          description: Internal Server Error
+  /api/v1/signup:
+    post:
+      tags:
+        - User
+      description: Returns a user object
+      requestBody:
+        required : true
+        content : 
+          multipart/form-data:
+            schema:
+              type : object
+              properties:
+                name:
+                  type : string
+                email:
+                  type : string
+                password:
+                  type : string
+                photo:
+                    type : string
+                    format : binary
+              required:
+                - name
+                - email
+                - password
+                - photo            
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: User not created
+
+  /api/v1/login:
+    post:
+      tags:
+        - User
+      description: Returns a user object
+      requestBody:
+        required : true
+        content : 
+          application/json:
+            schema:
+              type : object
+              properties:
+                email:
+                  type : string
+                password:
+                  type : string
+              required:
+                - email
+                - password
+    
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: User not created
+  /api/v1/logout:
+    get:
+      tags:
+        - User
+      description: Clears the cookie
+    
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: User not created
+
+  /api/v1/forgotpassword:
+    post:
+      tags:
+        - User
+      description: Used to forgot password of user
+      requestBody:
+        required : true
+        content : 
+          application/json:
+            schema:
+              type : object
+              properties:
+                email:
+                  type : string
+              required:
+                - email
+                - password
+    
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: User not created
+
+
+  /api/v1/password/reset/{token}:
+    post:
+      tags:
+        - User
+      summary: Update resource by dynamic path
+      description: Update a resource identified by dynamic path with password change.
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: New password
+                confirmPassword:
+                  type: string
+                  description: Confirm new password
+              required:
+                - password
+                - confirmPassword
+      responses:
+        '200':
+          description: Resource updated successfully
+        
+
+  /api/v1/userdashboard:
+    get:
+      tags:
+        - User
+      description: Returns the user
+      
+      responses:
+        '200':
+          description: User sent
+
+  
+  /api/v1/admin/users:
+    get:
+      tags:
+        - User
+      description: Returns all the users 
+
+      responses:
+        '200':
+          description: Success true 
+
+  /api/v1/admin/user/{id}:
+    get:
+      tags:
+        - User
+      summary: Update resource by dynamic path
+      description: Update a resource identified by dynamic path with password change.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: User sent successfully
+
+    put:
+      tags:
+        - User
+      summary: Update resource by dynamic path
+      description: Updates a user details.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: name
+                email:
+                  type: string
+                  description: email
+                role:
+                  type: string
+                  description: role
+              required:
+                - password
+                - confirmPassword
+      responses:
+        '200':
+          description: Resource updated successfully
+    delete:
+      tags:
+        - User
+      summary: Deletes resource by dynamic path
+      description: Delete a user from the database.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+
+  /api/v1/manager/users:
+    get:
+      tags:
+        - User
+      description: Returns all the users 
+
+      responses:
+        '200':
+          description: Success true 
+
+  /api/v1/admin/addproduct:
+    post:
+      tags:
+        - Product
+      description: add a product to database
+      requestBody:
+        required : true
+        content : 
+          multipart/form-data:
+            schema:
+              type : object
+              properties:
+                name:
+                  type : string
+                price:
+                  type : string
+                description:
+                  type : string
+                photos:
+                  type : string
+                  format : binary
+                category:
+                  type: string
+                brand:
+                  type:string
+              required:
+                - name
+                - email
+                - password
+                - photo
+      responses:
+        '200':
+          description: Success true
+              
+
+
+  /api/v1/admin/product/all:
+    get:
+      tags:
+        - Product
+      desciption: returns all the products
+      responses:
+        '200':
+          description: Success true
+
+  /api/v1/admin/product/{id}:
+    put:
+      tags:
+        - Product
+      description: update product by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: string
+                description:
+                  type: string
+                photos:
+                  type: string
+                  format: binary
+                category:
+                  type: string
+                brand:
+                  type: string                  
+              required:
+                - name
+                - price
+                - description
+                - photos
+                - category
+                - brand
+      responses:
+        '200':
+          description: Resource updated successfully
+    delete:
+      tags:
+        - Product
+      description: update product by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    
+      responses:
+        '200':
+          description: Resource updated successfully
+  
+    
