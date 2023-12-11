@@ -28,14 +28,18 @@ app.use(fileUpload({
 app.get("/health",(req,res)=>{console.log('health is fine')})
 
 // import all the routes
-const homeRoutes  = require("./routes/homeRoutes");
+
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes")
 const paymentRoutes = require("./routes/paymentRoutes")
 const orderRoutes = require("./routes/orderRoutes")
 
 //router middlewares
-app.use("/api/v1",homeRoutes);
+
+app.get("/",(req,res)=>{
+    res.status(200).json({success:true,msg:"Hello from server"});
+})
+
 app.use("/api/v1",userRoutes);
 app.use("/api/v1",productRoutes)
 app.use("/api/v1",paymentRoutes)
