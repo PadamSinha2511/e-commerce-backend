@@ -25,6 +25,8 @@ app.use(fileUpload({
     tempFileDir:"/tmp/"
 }));
 
+app.get("/health",(req,res)=>{console.log('health is fine')})
+
 // import all the routes
 const homeRoutes  = require("./routes/homeRoutes");
 const userRoutes = require("./routes/userRoutes");
